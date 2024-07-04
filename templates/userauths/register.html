@@ -1,0 +1,96 @@
+{% extends 'include/base.html'%}
+{% load static %}
+
+{% block content %}
+<div class="page-banner-area">
+<div class="container">
+<div class="row align-items-center justify-content-center">
+<div class="col-lg-6 col-md-6">
+<div class="page-banner-content" data-aos="fade-right" data-aos-delay="50" data-aos-duration="500" data-aos-once="true">
+<h2>Register</h2>
+<ul>
+<li>
+<a href="{% url 'core:index' %}">Home</a>
+</li>
+<li>Pages</li>
+<li>Register</li>
+</ul>
+</div>
+</div>
+<div class="col-lg-6 col-md-6">
+<div class="page-banner-image" data-aos="fade-left" data-aos-delay="50" data-aos-duration="500" data-aos-once="true">
+<img src="{% static 'assets/images/page-banner/banner.png' %}" alt="image">
+<div class="banner-shape">
+<img src="{% static 'assets/images/page-banner/shape.png' %}" alt="image">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="register-area ptb-100">
+<div class="container">
+<div class="register-form">
+<h2>Create Your Account</h2>
+<p>Create your account and start your banking journey with us.</p>
+{% if form.errors %}
+<div class="alert alert-danger">
+    <strong>{{form.errors}}</strong>
+</div>
+{% endif %}
+<form method="POST">
+    {% csrf_token %} 
+    
+<div class="form-group">
+<label>User name</label>
+{{form.username}}
+</div>
+<div class="form-group">
+<label>Email address</label>
+{{form.email}}
+</div>
+<div class="form-group">
+<label>Password</label>
+{{form.password1}}
+</div>
+<div class="form-group">
+<label>Confirm password</label>
+{{form.password2}}
+</div>
+<p class="description">The password should be at least eight characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! " ? $ % ^ & )</p>
+<button type="submit" class="default-btn">Create Account</button>
+<div class="account-text">
+<span>Already have an account? <a href="{% url 'userauths:login'%}">Login</a></span>
+</div>
+</form>
+</div>
+</div>
+</div>
+
+
+<div class="overview-area ptb-100">
+<div class="container">
+<div class="overview-content" data-aos="fade-up" data-aos-delay="50" data-aos-duration="500" data-aos-once="true">
+<span>Connect Us</span>
+<h3>Sending International Business Payments or Sending Money To Family Overseas? Snuff Are Your Fast And Simple Solution.</h3>
+<ul class="overview-btn-group">
+<li>
+<a href="help-center.html" class="default-btn">Personal Account</a>
+</li>
+<li>
+<a href="help-center.html" class="optional-btn">Business Account</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="overview-shape">
+<img src="{% static 'assets/images/overview/shape-1.png' %}" alt="image">
+</div>
+<div class="overview-shape-2">
+<img src="{% static 'assets/images/overview/shape-2.png' %}" alt="image">
+</div>
+</div>
+
+{% endblock content %}

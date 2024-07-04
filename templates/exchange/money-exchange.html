@@ -1,0 +1,156 @@
+{% extends "include/dashboard-base.html"%}
+{% load static %}
+{% block content%}
+{% load humanize%}
+
+    <!-- Dashboard Section start -->
+    <section class="dashboard-section body-collapse pay step step-2">
+        <div class="overlay pt-120">
+            <div class="container-fruid">
+                <div class="main-content">
+                    <div class="head-area d-flex align-items-center justify-content-between">
+                        <h4>Aza Exchange</h4>
+                        <div class="icon-area">
+                            <img src="{% static 'assets/images/icon/support-icon.png' %}" alt="icon">
+                        </div>
+                    </div>
+                    <form action="{% url 'core:money_exchange_process'%}" method="POST">
+                        {% csrf_token %}
+                        <div class="exchange-content">
+                            <div class="send-banance">
+                                <span class="mdr">You Send</span>
+                                <div class="input-area">
+                                    <input class="xxlr" onkeyup="CalculateBalance()" placeholder="{{request.user.dollar_account.dollar_balance|intcomma}}" type="number" name="amount-send" id="amount-send">
+                                    <select>
+                                        <option value="1">USD</option>
+                                    </select>
+                                </div>
+                                <p>Available Balance<b>${{request.user.dollar_account.dollar_balance|intcomma}}</b></p>
+                                <p id="new_balance"></p>
+                                <p class="text-danger" id="error-div"></p>
+                            </div>
+                            <div class="send-banance recipient">
+                                <span class="mdr">Recipient gets</span>
+                                <div class="input-area">
+                                    <input class="xxlr" id="recipient-gets" name="recipient-gets" placeholder="0.00" type="number" readonly>
+                                    <select>
+                                        <option value="1">NGN</option>
+                                    </select>
+                                </div>
+                                <p>Today’s rate: <b>1 USD = &#8358;{{request.user.dollar_account.dollar_rate|intcomma}}</b></p>
+                            </div>
+                        </div>
+                        <!-- Add hidden input for total-to-pay -->
+                        <input type="hidden" id="hidden-total-to-pay" name="hidden-total-to-pay" value="0.00">
+                        <input type="hidden" name="hidden-estimated-fee" id="hidden-estimated-fee">
+                        <!--js-->
+                        <script>
+                            function CalculateBalance() {
+                                let available_balance = parseFloat("{{ request.user.dollar_account.dollar_balance }}");
+                                let exchange_dollar = parseFloat("{{ request.user.dollar_account.dollar_rate }}");
+                                let sendAmount_input = document.getElementById("amount-send");
+                                let sendAmount = parseFloat(sendAmount_input.value);
+                                let new_balance = document.getElementById("new_balance");
+                                let recipientGets = document.getElementById("recipient-gets");
+                                let recipientGetsDisplay = document.getElementById("recipient-gets-display");
+                                let errorDiv = document.getElementById("error-div");
+                                let total_to_pay = document.getElementById("total-to-pay");
+                                let estimatedFeeDiv = document.getElementById("estimated-fee");
+                                let hiddenTotalToPay = document.getElementById("hidden-total-to-pay"); // Get the hidden input
+                                let hiddenEstimatedFee = document.getElementById("hidden-estimated-fee"); // Get the hidden input
+                    
+                                if (isNaN(sendAmount)) {
+                                    sendAmount = 0;
+                                }
+                    
+                                if (sendAmount < 0) {
+                                    errorDiv.innerHTML = `You cannot send a negative amount.`;
+                                    new_balance.innerHTML = ``;
+                                    recipientGets.value = ``;
+                                    recipientGetsDisplay.innerHTML = ``;
+                                    total_to_pay.innerHTML = ``;
+                                    estimatedFeeDiv.innerHTML = ``;
+                                    return;
+                                }
+                    
+                                let estimatedFee = sendAmount * 0.30;
+                                let totalToSend = sendAmount + estimatedFee;
+                                let new_bal = available_balance - totalToSend;
+                                let exchange = exchange_dollar * sendAmount;
+                    
+                                console.log("Available Balance:", available_balance);
+                                console.log("Send Amount:", sendAmount);
+                                console.log("Estimated Fee:", estimatedFee);
+                                console.log("Total to Send:", totalToSend);
+                                console.log("New Balance:", new_bal);
+                                console.log("Exchange Amount:", exchange);
+                    
+                                new_balance.innerHTML = `New Balance <b>$${new_bal.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b>`;
+                                total_to_pay.innerHTML = `USD <b>$${totalToSend.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b>`;
+                                recipientGets.value = exchange.toFixed(2);
+                                recipientGetsDisplay.innerHTML = `${exchange.toFixed(2)} NGN`;
+                                estimatedFeeDiv.innerHTML = `Estimated Fee <b>$${estimatedFee.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b>`;
+                    
+                                hiddenTotalToPay.value = totalToSend.toFixed(2); // Update hidden input value
+                                hiddenEstimatedFee.value = estimatedFee.toFixed(2); // Update hidden input value
+
+                    
+                                if (new_bal < 0) {
+                                    new_balance.style.color = "red";
+                                    errorDiv.innerHTML = `You can only send up to $${(available_balance / 1.30).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+                                } else {
+                                    new_balance.style.color = "blue";
+                                    errorDiv.innerHTML = "";
+                                }
+                            }
+                        </script>
+                        
+                        <div class="pay-option">
+                            <div class="pay-option-single">
+                                <h6>Delivery method</h6>
+                                <select>
+                                    <option value="1">Aza Transfer</option>
+                                </select>
+                            </div>
+                            <div class="pay-option-single border-area">
+                                <h6>Bank Transfer Partner</h6>
+                                <select>
+                                    <option value="1">Aza bank</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="pay-details">
+                            <ul>
+                                <li>
+                                    <p>Estimated fee</p>
+                                    <p id="estimated-fee"></p>
+                                </li>
+                                <li>
+                                    <p>Transfer time</p>
+                                    <p>Same Day</p>
+                                </li>
+                            </ul>
+                            <div class="tatal-pay">
+                                <div class="single">
+                                    <h5>Total To Pay</h5>
+                                    <h5 id="total-to-pay">0.00</h5>
+                                </div>
+                                <div class="single">
+                                    <p>Recipient gets</p>
+                                    <h5 id="recipient-gets-display">0.00 NGN</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer-area mt-40">
+                            <button type="submit" style="padding: 10px 30px; border-radius: 50px; background: #009286; color: #fff;" href="pay-step-3.html" class="w-100 active">Continue</button>
+                        </div>
+                    </form>
+                    
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Dashboard Section end -->
+    {% endblock content %}

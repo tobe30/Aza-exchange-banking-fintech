@@ -1,0 +1,345 @@
+{% load static%}
+{% load humanize %}
+
+<!doctype html>
+<html lang="en">
+
+
+<!-- Mirrored from pixner.net/paylio/paylio-dashboard/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 Apr 2024 03:46:37 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AZA - Money Transfer and Online Payments Dashboard HTML Template</title>
+
+    <link rel="shortcut icon" href="{% static 'assets1/images/onitsha-logo.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'assets1/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets1/css/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets1/css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'assets1/css/plugin/apexcharts.css' %}">
+    <link rel="stylesheet" href="{% static 'assets1/css/plugin/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'assets1/css/arafat-font.css' %}">
+    <link rel="stylesheet" href="{% static 'assets1/css/plugin/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'assets1/css/style.css' %}">
+</head>
+
+<body>
+    <!-- start preloader -->
+    
+    <!-- end preloader -->
+
+    <!-- Scroll To Top Start-->
+    <a href="javascript:void(0)" class="scrollToTop"><i class="fas fa-angle-double-up"></i></a>
+    <!-- Scroll To Top End -->
+
+    <!-- header-section start -->
+    <header class="header-section body-collapse">
+        <div class="overlay">
+            <div class="container-fruid">
+                <div class="row d-flex header-area">
+                    <div class="navbar-area d-flex align-items-center justify-content-between">
+                        <div class="sidebar-icon">
+                            <img src="{% static 'assets1/images/icon/menu.png' %}" alt="icon">
+                        </div>
+                     
+                        <div class="dashboard-nav">
+                            <div class="single-item language-area">
+                                <div class="language-btn">
+                                    <img src="{% static 'assets1/images/icon/lang.png' %}" alt="icon">
+                                </div>
+                                <ul class="main-area language-content">
+                                    <li>English</li>
+                                    
+                                </ul>
+                            </div>
+                            <div class="single-item notifications-area">
+                                <div class="notifications-btn">
+                                    <img src="{% static 'assets1/images/icon/bell.png' %}" class="bell-icon" alt="icon">
+                                </div>
+                                <div class="main-area notifications-content">
+                                    <div class="head-area d-flex justify-content-between">
+                                        <h5>Notifications</h5>
+                                        <span class="mdr">{{ notifications.count }}</span>
+                                    </div>
+                                    <ul>
+                                        {% for n in notifications %}
+                                        <li>
+                                            
+                                            <a href="javascript:void(0)" class="d-flex">
+                                                <div class="text-area">
+                                                    
+                                                    
+                                                    {% if n.notification_type == "Credit Alert" %}
+                                                    <p class="mdr">You received a payment of 
+                                                        {% if n.currency == 'USD' %}
+                                                        <b>&#36;{{ n.amount|intcomma }}</b>
+                                                        {% else %}
+                                                        <b>&#8358;{{ n.amount|intcomma }}</b>
+                                                        {% endif %}
+                                                    </p>
+                                                    {% endif %}
+                                                    {% if n.notification_type == "Debit Alert" %}
+                                                    <p class="mdr">You sent a payment of 
+                                                        {% if n.currency == 'USD' %}
+                                                        <b>&#36;{{ n.amount|intcomma }}</b>
+                                                        {% else %}
+                                                        <b>&#8358;{{ n.amount|intcomma }}</b>
+                                                        {% endif %}
+                                                    </p>
+                                                    {% endif %}
+                                                    {% if n.notification_type == "Saved Funds" %}
+                                                    <p class="mdr">You Saved 
+                                                        {% if n.currency == 'USD' %}
+                                                        <b>&#36;{{ n.amount|intcomma }}</b>
+                                                        {% else %}
+                                                        <b>&#8358;{{ n.amount|intcomma }}</b>
+                                                        {% endif %}
+                                                    </p>
+                                                    {% endif %}
+                                                    {% if n.notification_type == "Sent Payment Request" %}
+                                                    <p class="mdr">You sent a <b>payment request</b> of 
+                                                        {% if n.currency == 'USD' %}
+                                                        <b>&#36;{{ n.amount|intcomma }}</b>
+                                                        {% else %}
+                                                        <b>&#8358;{{ n.amount|intcomma }}</b>
+                                                        {% endif %}
+                                                    </p>
+                                                    {% endif %}
+                                                    {% if n.notification_type == "Recieved Payment Request" %}
+                                                    <p class="mdr">You received a <b>payment request</b> of 
+                                                        {% if n.currency == 'USD' %}
+                                                        <b>&#36;{{ n.amount|intcomma }}</b>
+                                                        {% else %}
+                                                        <b>&#8358;{{ n.amount|intcomma }}</b>
+                                                        {% endif %}
+                                                    </p>
+                                                    {% endif %}
+                                                    {% if n.notification_type == "Funded Credit Card" %}
+                                                    <p class="mdr">You funded your credit card with 
+                                                        {% if n.currency == 'USD' %}
+                                                        <b>&#36;{{ n.amount|intcomma }}</b>
+                                                        {% else %}
+                                                        <b>&#8358;{{ n.amount|intcomma }}</b>
+                                                        {% endif %}
+                                                    </p>
+                                                    {% endif %}
+                                                    {% if n.notification_type == "Withdrew Credit Card Funds" %}
+                                                    <p class="mdr">You withdrew 
+                                                        {% if n.currency == 'USD' %}
+                                                        <b>&#36;{{ n.amount|intcomma }}</b>
+                                                        {% else %}
+                                                        <b>&#8358;{{ n.amount|intcomma }}</b>
+                                                        {% endif %}
+                                                        from your credit card</p>
+                                                    {% endif %}
+                                                    {% if n.notification_type == "Deleted Credit Card" %}
+                                                    <p class="mdr">You deleted your credit card</p>
+                                                    {% endif %}
+                                                    {% if n.notification_type == "Added Credit Card" %}
+                                                    <p class="mdr">You added a new  credit card</p>
+                                                    {% endif %}
+                                                        
+                                                    <p class="mdr time-area">{{n.date}}</p>
+                                                </div>
+                                            </a>
+                                            <i class="fa-solid fa-caret-right"></i>
+                                        </li>
+                                        {% endfor %}
+
+                                        <!-- <li>
+                                            <a href="javascript:void(0)" class="d-flex">
+                                                <div class="img-area">
+                                                    <img src="{% static 'assets1/images/user-2.png' %}" class="max-un" alt="image">
+                                                </div>
+                                                <div class="text-area">
+                                                    <p class="mdr"><b>James Deed</b> requested a payment of
+                                                        <b>£890.00</b>
+                                                    </p>
+                                                    <p class="mdr time-area">08.09AM</p>
+                                                </div>
+                                            </a>
+                                            <i class="fa-solid fa-caret-right"></i>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" class="d-flex">
+                                                <div class="img-area">
+                                                    <img src="{% static 'assets1/images/master-card.png' %}" class="max-un" alt="image">
+                                                </div>
+                                                <div class="text-area">
+                                                    <p class="mdr">Your new payment method has beed added successfully
+                                                    </p>
+                                                    <p class="mdr time-area">09.39AM</p>
+                                                </div>
+                                            </a>
+                                            <i class="fa-solid fa-caret-right"></i>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" class="d-flex">
+                                                <div class="img-area">
+                                                    <img src="{% static 'assets1/images/user-3.png' %}" class="max-un" alt="image">
+                                                </div>
+                                                <div class="text-area">
+                                                    <p class="mdr">You received a payment of <b>$250.00</b> from Goerge
+                                                        Michael</p>
+                                                    <p class="mdr time-area">Yesterday</p>
+                                                </div>
+                                            </a>
+                                            <i class="fa-solid fa-caret-right"></i>
+                                        </li> -->
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="single-item user-area">
+                                <div class="profile-area d-flex align-items-center">
+                                    <span class="user-profile">
+                                        {% if request.user.kyc.image.url %}
+                                        <img style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" src="{{ request.user.kyc.image.url }}" alt="image">
+                                    {% else %}
+                                        <img src="{% static 'assets1/images/default.jpg' %}"  style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" alt="">
+                                    {% endif %}
+
+                                    </span>
+                                    <i class="fa-solid fa-sort-down"></i>
+                                </div>
+                                <div class="main-area user-content">
+                                    <div class="head-area d-flex align-items-center">
+                                        <div class="profile-img">
+                                            {% if request.user.kyc.image.url %}
+                                            <img style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;" src="{{ request.user.kyc.image.url }}" alt="image">
+                                            {% else %}
+                                            <img src="{% static 'assets1/images/default.jpg' %}"  style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" alt="">
+                                            {% endif %}
+                                        </div>
+                                        <div class="profile-head">
+                                            <a href="{% url 'account:account' %}">
+                                                <h5>{{kyc.full_name|title}}</h5>
+                                            </a>
+                                            <p class="wallet-id"><small>Account No: {{ request.user.account.account_number }}</small> </p>
+                                            <p class="wallet-id"><small> Pin No:{{ request.user.account.pin_number }}</small></p>
+                                        </div>
+                                    </div>
+                                    <ul>
+                                        <li class="border-area">
+                                            <a href="account.html"><i class="fas fa-cog"></i>Settings</a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'userauths:sign-out' %}"><i class="fas fa-sign-out"></i>Logout</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar-wrapper">
+                        <div class="close-btn">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                        <div class="sidebar-logo">
+                            <a href="{% url 'account:dashboard' %}"><img src="{% static 'assets1/images/D439F406-D88B-4315-A629-3598C91E00A1-removebg-preview.png' %}" alt="logo" style="margin-bottom: -30px;"></a>
+                        </div>
+                        <ul>
+                            <li class="active">
+                                <a href="{% url 'account:dashboard' %}">
+                                    <img src="{% static 'assets1/images/icon/dashboard.png' %}" alt="Dashboard"> <span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'core:transactions' %}">
+                                    <img src="{% static 'assets1/images/icon/transactions.png' %}" alt="Transactions"> <span>Transactions</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'core:pay' %}">
+                                    <img src="{% static 'assets1/images/icon/pay.png' %}" alt="Pay"> <span>Pay</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'core:request-search-account' %}">
+                                    <img src="{% static 'assets1/images/icon/receive.png' %}" alt="Receive"> <span>Request</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'core:money_exchange' %}">
+                                    <img src="{% static 'assets1/images/icon/exchange.png' %}" alt="Exchange"> <span>Exchange</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'core:recipient' %}">
+                                    <img src="{% static 'assets1/images/icon/recipients.png' %}" alt="Recipients"> <span>Recipients</span>
+                                </a>
+                            </li>
+                           
+                            <li>
+                                <a href="{% url 'account:savings'%}">
+                                    <img src="{% static 'assets1/images/icon/deposit.png' %}" alt="Deposit"> <span>Deposit Money</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                        <ul class="bottom-item">
+                            <li>
+                                <a href="{% url 'account:account' %}">
+                                    <img src="{% static 'assets1/images/icon/account.png' %}" alt="Account"> <span>Account</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <img src="{% static 'assets1/images/icon/support.png' %}" alt="Support"> <span>Support</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'userauths:sign-out'%}">
+                                    <img src="{% static 'assets1/images/icon/quit.png' %}" alt="Quit"> <span>Quit</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="pt-120">
+                            <div class="invite-now">
+                                <div class="img-area">
+                                    <img src="{% static 'assets1/images/invite-now-illus.png' %}" alt="Image">
+                                </div>
+                                <p>Invite your friend and get $25</p>
+                                <a href="javascript:void(0)" class="cmn-btn">Invite Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                 <!-- alert start -->
+                 {% if messages %}
+                 {% for message in messages %}
+                     <div class="alert alert-{{message.tags}}">
+                         <strong>{{ message }}</strong>
+                     </div>
+                 {% endfor %}
+             {% endif %}
+             <script>
+                 setTimeout (() => {
+                     $(".alert").alert("close");
+                 }, 4000)
+             </script>
+             <!-- alert end -->
+    </header>
+    <!-- header-section end -->
+
+    {% block content %}
+
+    {% endblock content%}
+
+    <script src="{% static 'assets1/js/jquery.min.js' %}"></script>
+    <script src="{% static 'assets1/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets1/js/jquery-ui.js' %}"></script>
+    <script src="{% static 'assets1/js/plugin/apexcharts.js' %}"></script>
+    <script src="{% static 'assets1/js/plugin/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'assets1/js/plugin/waypoint.min.js' %}"></script>
+    <script src="{% static 'assets1/js/plugin/wow.min.js' %}"></script>
+    <script src="{% static 'assets1/js/plugin/plugin.js' %}"></script>
+    <script src="{% static 'assets1/js/main.js' %}"></script>
+</body>
+
+
+<!-- Mirrored from pixner.net/paylio/paylio-dashboard/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 Apr 2024 03:47:08 GMT -->
+</html>

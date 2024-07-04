@@ -1,0 +1,186 @@
+{% extends "include/dashboard-base.html" %}
+{% load humanize%}
+{% load static %}
+{% block content %}
+
+    <!-- Dashboard Section start -->
+    <section class="dashboard-section body-collapse pay step step-2 step-3 exchange">
+        <div class="overlay pt-120">
+            <div class="container-fruid">
+                <div class="main-content">
+                    <div class="head-area d-flex align-items-center justify-content-between">
+                        <h4>Money Exchange</h4>
+                        <div class="icon-area">
+                            <img src="{% static 'assets1/images/icon/support-icon.png' %}" alt="icon">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-7 col-lg-6">
+                            <div class="choose-recipient">
+                                <div class="step-area">
+                                    <span class="mdr">Step 3 of 3</span>
+                                    <h5>Choose Recipient</h5>
+                                </div>
+                                <div class="user-select">
+                                    <div class="single-user">
+                                        <div class="left d-flex align-items-center">
+                                            <div class="img-area">
+                                                <img style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;" src="{{ account.user.kyc.image.url}}" alt="image">
+                                            </div>
+                                            <div class="text-area">
+                                                <p>{{ account.user.kyc.full_name|title }}</p>
+                                                <span class="mdr"><a  class="__cf_email__">{{account.user.email}}</a></span>
+                                            </div>
+                                        </div>
+                                        <div class="right">
+                                            <a href="javascript:void(0)">
+                                                <i class="icon-h-edit"></i>
+                                                Edit
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <form action="#">
+                                <div class="payment-details">
+                                    <div class="top-area">
+                                        <h6>Payment Details</h6>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-8 col-lg-12">
+                                            <ul class="details-list">
+                                                <li>
+                                                    <span>Branch Name</span>
+                                                    <b>Uttara Branch</b>
+                                                </li>
+                                                <li>
+                                                    <span>Account number</span>
+                                                    <b>{{account.account_number}}</b>
+                                                </li>
+                                                <li>
+                                                    <span>Reason for Sending</span>
+                                                    <b>{{transaction.description}}</b>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="footer-area mt-40">
+                                    <a href="javascript:void(0)" class="transferMod active"  data-bs-toggle="modal" data-bs-target="#transferMod">Request Payment</a>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-xl-5 col-lg-6">
+                            <div class="side-area">
+                                <p>Recipient gets</p>
+                                <div class="title-area">
+                                    <h5>Bank Deposit</h5>
+                                    <ul class="flag-area">
+                                        <li>
+                                            <span class="icon-area">
+                                                <img src="{% static 'assets1/images/icon/flag-usa.png' %}" alt="icon">
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="icon-area">
+                                                <img src="{% static 'assets1/images/icon/flag-bd.png' %}" alt="icon">
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <ul class="deposit-details">
+                                    <li>
+                                        <span>You Send</span>
+                                        <b>{{ adjusted_amount|intcomma }} USD</b>
+                                    </li>
+                                    <li>
+                                        <span>They get</span>
+                                        <b>{{transaction.amount_exchange|intcomma}} NGN</b>
+                                    </li>
+                                    <li>
+                                        <span>Exchange rate</span>
+                                        <b>1 USD = {{dollar_account.dollar_rate|intcomma}} NGN</b>
+                                    </li>
+                                    <li>
+                                        <span>Our fee</span>
+                                        <b>+{{transaction.amount_fee}} USD</b>
+                                    </li>
+                                </ul>
+                                <ul class="deposit-details">
+                                    <li>
+                                        <span>Total to pay</span>
+                                        <b>{{transaction.amount|intcomma}} USD</b>
+                                    </li>
+                                    <li>
+                                        <span>They receive</span>
+                                        <b>{{transaction.amount_exchange|intcomma}} NGN</b>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Dashboard Section end -->
+
+
+    <div class="transfer-popup">
+        <div class="container-fruid">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="modal fade" id="transferMod" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <ul class="nav nav-tabs d-none" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="transfer-tab" data-bs-toggle="tab" data-bs-target="#transfer" type="button" role="tab" aria-controls="transfer" aria-selected="true">transfer</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="success-tab" data-bs-toggle="tab" data-bs-target="#success" type="button" role="tab" aria-controls="success" aria-selected="false">Confirm</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="transfer" role="tabpanel" aria-labelledby="transfer-tab">
+                                    <div class="modal-content">
+                                        <div class="modal-header mb-60 justify-content-between">
+                                            <a href="javascript:void(0)">
+                                                <i class="icon-a-left-arrow"></i>
+                                                Back
+                                            </a>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                                        </div>
+                                        <div class="main-content">
+                                            <h4>Confirm Transfer!</h4>
+                                            <p>Give us your correct pin No.</p>
+                                            <form action="{% url 'core:exchange-rateprocess' dollar_account.dollar_number account.account_number transaction.transaction_id %}" method="POST">
+                                                {% csrf_token %}
+                                                <div class="userInput">
+                                                    <input minlength="4" maxlength="4" name="pin-number" type="text">
+                                                </div>
+                                                <button type="submit" class="mt-60 active">Confirm</button>
+                                                
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="success" role="tabpanel" aria-labelledby="success-tab">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="btn-close d-md-none d-block" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                                        </div>
+                                        <div class="main-content text-center pt-120 pb-120">
+                                            <img src="{% static 'assets/images/icon/success.png' %}" alt="icon">
+                                            <h3>Success</h3>
+                                            <p>Transfer was completed.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock content %}

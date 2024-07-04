@@ -1,0 +1,189 @@
+{% extends "include/dashboard-base.html" %}
+{% load humanize%}
+{% load static %}
+{% block content %}
+
+    <!-- Dashboard Section start -->
+    <section class="dashboard-section body-collapse pay step exchange">
+        <div class="overlay pt-120">
+            <div class="container-fruid">
+                <div class="main-content">
+                    <div class="head-area d-flex align-items-center justify-content-between">
+                        <h4>AZA Exchange</h4>
+                        <div class="icon-area">
+                            <img src="{% static 'assets1/images/icon/support-icon.png' %}" alt="icon">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-7 col-lg-6">
+                            <div class="choose-recipient">
+                                <div class="step-area">
+                                    <span class="mdr">Step 1 of 3</span>
+                                    <h5>Choose Recipient</h5>
+                                </div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li class="nav-item recipient-list" role="presentation">
+                                        <button class="nav-link my-recipients active" id="recipients-tab" data-bs-toggle="tab"
+                                            data-bs-target="#recipients" type="button" role="tab" aria-controls="recipients"
+                                            aria-selected="true">
+                                            <span class="icon-area">
+                                                <i class="icon-e-plus"></i>
+                                            </span>
+                                            <span>My Recipients</span>
+                                        </button>
+                                    </li>
+                                 <!--   <li class="nav-item recipient-list" role="presentation">
+                                        <button class="nav-link my-recipients" id="recent-tab" data-bs-toggle="tab"
+                                            data-bs-target="#recent" type="button" role="tab" aria-controls="recent"
+                                            aria-selected="false">
+                                            <span class="icon-area">
+                                                <i class="icon-f-user"></i>
+                                            </span>
+                                            <span>Most Recent</span>
+                                        </button>
+                                    </li>-->
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="recipients" role="tabpanel" aria-labelledby="recipients-tab">
+                                        <div class="section-head">
+                                            <h5>Add a new recipient</h5>
+                                            <p>This information must be accurate or your transfer will be delayed.</p>
+                                        </div>
+                                        
+                                            <form action="{% url 'core:exchange-confirmation' dollar_account.dollar_number transaction.transaction_id %}" method="POST">
+                                                {% csrf_token %}
+                                                <div class="row justify-content-center">
+                                                    <div class="col-md-12">
+                                                        <div class="single-input">
+                                                            <label for="accountnumber">Account number</label>
+                                                            <input type="number" id="accountnumber" name="accountnumber" placeholder="Account number" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="single-input">
+                                                            <label for="sendingreason">Reason for Sending</label>
+                                                            <input type="text" id="sendingreason" name="sendingreason" placeholder="Reason for Sending" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="footer-area mt-40">
+                                                            <a href="{% url 'core:money_exchange' %}">Previous Step</a>
+                                                            <button type="submit" style="padding: 10px 30px; border-radius: 10px; background: #009286; color: #fff;" class="active">Next</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                    
+                                        
+                                    </div>
+                                    <div class="tab-pane fade" id="recent" role="tabpanel" aria-labelledby="recent-tab">
+                                        <div class="user-select">
+                                            <div class="single-user">
+                                                <div class="left d-flex align-items-center">
+                                                    <div class="img-area">
+                                                        <img src="{% static 'assets1/images/profile-1.png' %}" alt="image">
+                                                    </div>
+                                                    <div class="text-area">
+                                                        <p>Herman Tran</p>
+                                                        <span class="mdr"><a href="https://pixner.net/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="420a27302f232c717702252f232b2e6c212d2f">[email&#160;protected]</a></span>
+                                                    </div>
+                                                </div>
+                                                <div class="right">
+                                                    <a href="javascript:void(0)">Choose</a>
+                                                </div>
+                                            </div>
+                                            <div class="single-user">
+                                                <div class="left d-flex align-items-center">
+                                                    <div class="img-area">
+                                                        <img src="{% static 'assets1/images/profile-2.png' %}" alt="image">
+                                                    </div>
+                                                    <div class="text-area">
+                                                        <p>Morris Lucas</p>
+                                                        <span class="mdr"><a href="https://pixner.net/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7a37150808130948483a1d171b131654191517">[email&#160;protected]</a></span>
+                                                    </div>
+                                                </div>
+                                                <div class="right">
+                                                    <a href="javascript:void(0)">Choose</a>
+                                                </div>
+                                            </div>
+                                            <div class="single-user">
+                                                <div class="left d-flex align-items-center">
+                                                    <div class="img-area">
+                                                        <img src="{% static 'assets1/images/profile-3.png' %}" alt="image">
+                                                    </div>
+                                                    <div class="text-area">
+                                                        <p>Willard Lyons</p>
+                                                        <span class="mdr"><a href="https://pixner.net/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0b5c6267676a796f32324b6c666a626725686466">[email&#160;protected]</a></span>
+                                                    </div>
+                                                </div>
+                                                <div class="right">
+                                                    <a href="javascript:void(0)">Choose</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="footer-area mt-40">
+                                                <a href="money-exchange.html">Previous Step</a>
+                                                <a href="money-exchange-step-2.html" class="active">Next</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-5 col-lg-6">
+                            <div class="side-area">
+                                <p>Recipient gets</p>
+                                <div class="title-area">
+                                    <h5>Bank Deposit</h5>
+                                    <ul class="flag-area">
+                                        <li>
+                                            <span class="icon-area">
+                                                <img src="{% static 'assets1/images/icon/flag-usa.png' %}" alt="icon">
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="icon-area">
+                                                <img src="{% static 'assets1/images/icon/flag-bd.png' %}" alt="icon">
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <ul class="deposit-details">
+                                    <li>
+                                        <span>You Send</span>
+                                        <b>{{ adjusted_amount|intcomma }}USD</b>
+                                    </li>
+                                    <li>
+                                        <span>They get</span>
+                                        <b>{{transaction.amount_exchange|intcomma}} NGN</b>
+                                    </li>
+                                    <li>
+                                        <span>Exchange rate</span>
+                                        <b>1 USD = {{dollar_account.dollar_rate|intcomma}} NGN</b>
+                                    </li>
+                                    <li>
+                                        <span>Our fee</span>
+                                        <b>+{{transaction.amount_fee}} USD</b>
+                                    </li>
+                                </ul>
+                                <ul class="deposit-details">
+                                    <li>
+                                        <span>Total to pay</span>
+                                        <b>{{transaction.amount|intcomma}} USD</b>
+                                    </li>
+                                    <li>
+                                        <span>They receive</span>
+                                        <b>{{transaction.amount_exchange|intcomma}} NGN</b>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Dashboard Section end -->
+
+    {% endblock content %}

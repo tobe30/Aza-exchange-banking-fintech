@@ -1,0 +1,98 @@
+{% extends 'include/base.html'%}
+{% load static %}
+
+{% block content %}
+<div class="page-banner-area">
+<div class="container">
+<div class="row align-items-center justify-content-center">
+<div class="col-lg-6 col-md-6">
+<div class="page-banner-content" data-aos="fade-right" data-aos-delay="50" data-aos-duration="500" data-aos-once="true">
+<h2>Login</h2>
+<ul>
+<li>
+<a href="{% url 'core:index' %}">Home</a>
+</li>
+<li>Pages</li>
+<li>Login</li>
+</ul>
+</div>
+</div>
+<div class="col-lg-6 col-md-6">
+<div class="page-banner-image" data-aos="fade-left" data-aos-delay="50" data-aos-duration="500" data-aos-once="true">
+<img src="{% static 'assets/images/page-banner/banner.png' %}" alt="image">
+<div class="banner-shape">
+<img src="{% static 'assets/images/page-banner/shape.png' %}" alt="image">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="login-area ptb-100">
+<div class="container">
+<div class="login-form">
+<h2>Login Here</h2>
+<p>Welcome Back, Login To Your Account</p>
+{% if messages %}
+            {% for message in messages %}
+ <strong style="color: red;">{{ message }}</strong>
+ {% endfor %}
+{% endif %}
+<form method="POST">
+    {% csrf_token %}
+<div class="form-group">
+<label>Your email address</label>
+<input required type="text" name="email" class="form-control" placeholder="Your email address">
+</div>
+<div class="form-group">
+<label>Your password</label>
+<input type="password" class="form-control" name="password" placeholder="Your password">
+</div>
+<div class="row align-items-center">
+<div class="col-lg-6 col-md-6 col-sm-6 remember-me-wrap">
+<p>
+<input type="checkbox" id="test2">
+<label required for="test2">Remember me</label>
+</p>
+</div>
+<div class="col-lg-6 col-md-6 col-sm-6 lost-your-password-wrap">
+<a href="forgot-password.html" class="lost-your-password">Lost your password?</a>
+</div>
+</div>
+<button type="submit" class="default-btn">Login Now</button>
+<div class="account-text">
+<span>Don’t have an account? <a href="{% url 'userauths:register'%}">Create Account</a></span>
+</div>
+</form>
+</div>
+</div>
+</div>
+
+
+<div class="overview-area ptb-100">
+<div class="container">
+<div class="overview-content" data-aos="fade-up" data-aos-delay="50" data-aos-duration="500" data-aos-once="true">
+<span>Connect Us</span>
+<h3>Sending International Business Payments or Sending Money To Family Overseas? Snuff Are Your Fast And Simple Solution.</h3>
+<ul class="overview-btn-group">
+<li>
+<a href="help-center.html" class="default-btn">Personal Account</a>
+</li>
+<li>
+<a href="help-center.html" class="optional-btn">Business Account</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="overview-shape">
+<img src="{% static 'assets/images/overview/shape-1.png' %}" alt="image">
+</div>
+<div class="overview-shape-2">
+<img src="{% static 'assets/images/overview/shape-2.png' %}" alt="image">
+</div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'include/base.html'%}
+{% load static %}
+{% block content%}
+
+<div class="coming-soon-area">
+<div class="container">
+<div class="coming-soon-content">
+<a href="index.html" class="logo">
+    <img src="{% static 'assets/images/onitsha-logo.png' %}" style="margin-bottom: -40px; margin-top: -20px; width: 100px;" class="black-logo" alt="image">
+    <img src="{% static 'assets/images/onitsha-logo.png' %}" style="margin-bottom: -40px; margin-top: -20px; width: 100px;" class="white-logo" alt="image">
+</a>
+<h2>We Are Launching Soon</h2>
+<div id="timer" class="flex-wrap d-flex justify-content-center">
+<div id="days" class="align-items-center flex-column d-flex justify-content-center"></div>
+<div id="hours" class="align-items-center flex-column d-flex justify-content-center"></div>
+<div id="minutes" class="align-items-center flex-column d-flex justify-content-center"></div>
+<div id="seconds" class="align-items-center flex-column d-flex justify-content-center"></div>
+</div>
+
+</div>
+</div>
+</div>
+
+
+{% endblock content %}
