@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from account.models import Account, KYC, DollarAccount
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -238,6 +238,8 @@ def TransferDollarProcess(request, dollar_number, transaction_id):
 
     sender = request.user 
     receiver = account.user 
+    receiver_kyc = get_object_or_404(KYC, user=receiver)
+    
 
     sender_account = request.user.dollar_account 
     receiver_account = account
@@ -259,9 +261,11 @@ def TransferDollarProcess(request, dollar_number, transaction_id):
             account.dollar_balance += transaction.amount
             account.save()
             
+            account_type = "USD"  
             # Recipient create or get
             recipient, created = Recipient.objects.get_or_create(
-                kyc=kyc,
+                kyc=receiver_kyc,
+                account_type=account_type,
                 defaults={
                     'r_number': account.dollar_number,
                     'user': sender,
@@ -312,6 +316,7 @@ def TransferProcess(request, account_number, transaction_id):
 
     sender = request.user 
     reciever = account.user 
+    receiver_kyc = get_object_or_404(KYC, user=reciever)
 
     sender_account = request.user.account 
     reciever_account = account
@@ -333,18 +338,27 @@ def TransferProcess(request, account_number, transaction_id):
             account.account_balance += transaction.amount
             account.save()
             
-
+            account_type = "NGN"  
             #recipient create
             
-            Recipient.objects.get_or_create(
-                r_number=account.account_number,
-                user=sender,
+            recipient, created = Recipient.objects.get_or_create(
+                kyc=receiver_kyc,
+                account_type=account_type,
                 defaults={
+                    'r_number': account.account_number,
+                    'user': sender,
                     'full_name': full_name,
-                    'kyc': kyc,
                     'account_type': 'NGN'
                 }
             )
+            
+            if not created:
+                recipient.r_number = account.account_number
+                recipient.user = sender
+                recipient.full_name = full_name
+                recipient.account_type = 'NGN'
+                recipient.save()
+            
                 
                   
             

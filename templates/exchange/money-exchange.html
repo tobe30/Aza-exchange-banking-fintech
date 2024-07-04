@@ -20,7 +20,7 @@
                             <div class="send-banance">
                                 <span class="mdr">You Send</span>
                                 <div class="input-area">
-                                    <input class="xxlr" onkeyup="CalculateBalance()" placeholder="{{request.user.dollar_account.dollar_balance|intcomma}}" type="number" name="amount-send" id="amount-send">
+                                    <input class="xxlr" onkeyup="CalculateBalance()" placeholder="{{request.user.dollar_account.dollar_balance|intcomma}}" required type="number" name="amount-send" id="amount-send" min="0">
                                     <select>
                                         <option value="1">USD</option>
                                     </select>
@@ -28,6 +28,8 @@
                                 <p>Available Balance<b>${{request.user.dollar_account.dollar_balance|intcomma}}</b></p>
                                 <p id="new_balance"></p>
                                 <p class="text-danger" id="error-div"></p>
+                                <p class="text-danger" id="zero-amount-error"></p>
+
                             </div>
                             <div class="send-banance recipient">
                                 <span class="mdr">Recipient gets</span>
@@ -58,6 +60,10 @@
                                 let estimatedFeeDiv = document.getElementById("estimated-fee");
                                 let hiddenTotalToPay = document.getElementById("hidden-total-to-pay"); // Get the hidden input
                                 let hiddenEstimatedFee = document.getElementById("hidden-estimated-fee"); // Get the hidden input
+                                let submitButton = document.getElementById("submit-button");
+                                let zeroAmountError = document.getElementById("zero-amount-error");
+
+
                     
                                 if (isNaN(sendAmount)) {
                                     sendAmount = 0;
@@ -102,6 +108,14 @@
                                     new_balance.style.color = "blue";
                                     errorDiv.innerHTML = "";
                                 }
+
+                                if (sendAmount === 0) {
+                                    zeroAmountError.innerHTML = "The amount to send must be greater than $0.";
+                                    submitButton.disabled = true;
+                                } else {
+                                    zeroAmountError.innerHTML = "";
+                                    submitButton.disabled = false;
+                                }
                             }
                         </script>
                         
@@ -142,7 +156,7 @@
                             </div>
                         </div>
                         <div class="footer-area mt-40">
-                            <button type="submit" style="padding: 10px 30px; border-radius: 50px; background: #009286; color: #fff;" href="pay-step-3.html" class="w-100 active">Continue</button>
+                            <button type="submit" id="submit-button" style="padding: 10px 30px; border-radius: 50px; background: #009286; color: #fff;" href="pay-step-3.html" class="w-100 active">Continue</button>
                         </div>
                     </form>
                     

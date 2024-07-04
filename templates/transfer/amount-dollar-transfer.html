@@ -47,7 +47,7 @@
                         <div class="send-banance">
                             <span class="mdr">You Send</span>
                             <div class="input-area">
-                                <input class="xxlr" onkeyup="CalculateBalance()" placeholder="{{request.user.dollar_account.dollar_balance|intcomma}}" type="number" name="amount-send" id="amount-send" >
+                                <input class="xxlr" required onkeyup="CalculateBalance()" placeholder="{{request.user.dollar_account.dollar_balance|intcomma}}" type="number" name="amount-send" id="amount-send" min="0">
                                 <select>
                                     <option value="1">USD</option>
                                     <option value="2">USD</option>
@@ -57,56 +57,16 @@
                             <p>Available Balance<b>${{request.user.dollar_account.dollar_balance|intcomma}}</b></p>
                             <p id="new_balance"></p>
                             <p class="text-danger" id="error-div"></p>
+                            <p class="text-danger" id="amount-error"></p>
                         </div>
-
+                    
                         <div class="send-banance pt-0 mt-0">
                             <span class="mdr">Payment Description</span>
                             <div class="input-area">
                                 <input class="xxlr" onkeyup="CalculateBalance()" placeholder="Payment for fees" type="text" name="description">
-                                
                             </div>
                         </div>
-                        <!--js-->
-                        <script>
-                            function CalculateBalance(){
-                                let available_balance = "{{ request.user.dollar_account.dollar_balance }}"// Get users current account balanceor amount
-                                let new_balance= document.getElementById("new_balance")
-                                let sendAmount_input = document.getElementById("amount-send")// amount user one to send
-                                let sendAmount =  sendAmount_input.value //get whatever we type in
-                                let errorDiv = document.getElementById("error-div")
-                                let total_to_pay = document.getElementById("total-to-pay")
-
-                                let errors = []
-
-                                if (isNaN(sendAmount)) {
-                                    sendAmount = 0;
-                                }
-                        
-                                if (sendAmount < 0) {
-                                    sendAmount_input.value = 0;
-                                    sendAmount = 0;
-                                }
- 
-                                new_bal = available_balance - sendAmount
-                                console.log(new_bal);
-
-                                new_balance.innerHTML = `New Balance <b>  $${new_bal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} </b>`;
-                                total_to_pay.innerHTML = `NGN <b>  $${sendAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} </b>`;
-
-
-                                if (new_bal < 0){
-                                    new_balance.style.color = "red"
-                                    errorDiv.innerHTML= "You can only send $" + available_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                                }else{
-                                    new_balance.style.color = "blue"
-                                }
-
-
-
-                            }
-                            
-                        </script>
-
+                    
                         <ul class="total-fees">
                             <li>Total Fees</li>
                             <li>Free</li>
@@ -121,9 +81,53 @@
                         </ul>
                         <div class="footer-area mt-40">
                             <a href="pay-step-1.html">Previous Step</a>
-                            <button type="submit" style="padding: 10px 30px; border-radius: 10px; background: #009286; color: #fff;" href="" class="active">Next</button>
+                            <button type="submit" style="padding: 10px 30px; border-radius: 10px; background: #009286; color: #fff;" id="submit-button" class="active">Next</button>
                         </div>
                     </form>
+                    
+                    <!-- JavaScript -->
+                    <script>
+                        function CalculateBalance() {
+                            let available_balance = parseFloat("{{ request.user.dollar_account.dollar_balance }}");
+                            let new_balance = document.getElementById("new_balance");
+                            let sendAmount_input = document.getElementById("amount-send");
+                            let sendAmount = parseFloat(sendAmount_input.value) || 0; // Use 0 if sendAmount is NaN
+                            let errorDiv = document.getElementById("error-div");
+                            let amountError = document.getElementById("amount-error");
+                            let total_to_pay = document.getElementById("total-to-pay");
+                            let submitButton = document.getElementById("submit-button");
+                    
+                            if (isNaN(sendAmount)) {
+                                sendAmount = 0;
+                            }
+                    
+                            if (sendAmount < 0) {
+                                sendAmount_input.value = 0;
+                                sendAmount = 0;
+                            }
+                    
+                            let new_bal = available_balance - sendAmount;
+                            new_balance.innerHTML = `New Balance <b>$${new_bal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b>`;
+                            total_to_pay.innerHTML = `USD <b>$${sendAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b>`;
+                    
+                            if (new_bal < 0) {
+                                new_balance.style.color = "red";
+                                errorDiv.innerHTML = "You can only send $" + available_balance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            } else {
+                                new_balance.style.color = "blue";
+                                errorDiv.innerHTML = "";
+                            }
+                    
+                            if (sendAmount === 0) {
+                                amountError.innerHTML = "The amount to send must be greater than $0.";
+                                submitButton.disabled = true;
+                            } else {
+                                amountError.innerHTML = "";
+                                submitButton.disabled = false;
+                            }
+                        }
+                    </script>
+                    
                 </div>
             </div>
         </div>

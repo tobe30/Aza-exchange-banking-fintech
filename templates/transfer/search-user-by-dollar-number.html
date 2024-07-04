@@ -95,8 +95,10 @@
                             </div>
                             <div class="right">
                                 {% if r.account_type == 'USD' %}
+                                <h6 style="color: red;">USD-account No</h6>
                                 <a href="{% url 'core:amount-dollar-transfer' r.r_number  %}">Choose</a>
                                 {% elif r.account_type == 'NGN' %}
+                                <h6 style="color: green;">NGN-account No</h6>
                                 <a href="{% url 'core:amount-transfer' r.r_number  %}">Choose</a>
                                 {% endif %}
                             </div>

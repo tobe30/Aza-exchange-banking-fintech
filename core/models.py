@@ -120,12 +120,15 @@ class Notification(models.Model):
     
 class Recipient(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    kyc = models.OneToOneField('account.KYC', on_delete=models.CASCADE, null=True, blank=True)  # Add this line
+    kyc = models.ForeignKey('account.KYC', on_delete=models.CASCADE, null=True, blank=True)  # Add this line
     full_name = models.CharField(max_length=100, default=0)
     rit = ShortUUIDField(length=10, max_length=25)
     r_number = ShortUUIDField(default=0, length=10, max_length=25)
     date = models.DateTimeField(auto_now_add=True)
     account_type = models.CharField(max_length=10, choices=[('USD', 'Dollar'), ('NGN', 'Naira')], default='NGN')
+    
+    class Meta:
+        unique_together = ('kyc', 'account_type')
     
     def __str__(self):
         return f"{self.full_name} - {self.rit}"
