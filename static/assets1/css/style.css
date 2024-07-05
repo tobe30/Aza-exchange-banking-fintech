@@ -1739,15 +1739,7 @@ label {
   font-weight: 600;
 }
 
-.dashboard-section.pay.step-2 .main-content .send-banance .nice-select .current::before {
-  position: absolute;
-  content: "";
-  width: 30px;
-  height: 30px;
-  left: -40px;
-  background-image: url(../images/icon/flag-usa.png);
-  background-repeat: no-repeat;
-}
+
 
 .dashboard-section.pay.step-2 .main-content .send-banance .nice-select .list {
   width: 100%;
@@ -1787,13 +1779,15 @@ label {
   width: 50px;
   height: 50px;
   left: -30px;
-  background-color: #5732C6;
+  background-color: #009286;
   border: 6px solid var(--bs-white);
   border-radius: 25px;
 }
 
 .dashboard-section.pay.step-2 .main-content .exchange-content .recipient .nice-select .current::before {
-  background-image: url(../images/icon/flag-bd.png);
+  background-image: url(../images/icon/NG.png);
+  width: 46px;
+  left: -50px;
 }
 
 .dashboard-section.pay.step-2 .main-content .pay-option {

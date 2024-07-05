@@ -17,8 +17,8 @@ def dashboard(request):
             messages.warning(request, "You need to submit your kyc")
             return redirect("account:kyc-reg")
         
-        sender_transaction = Transaction.objects.filter(sender=request.user, transaction_type="transfer").order_by("-id")[:5]
-        reciever_transaction = Transaction.objects.filter(reciever=request.user, transaction_type="transfer").order_by("-id")[:5]
+        sender_transaction = Transaction.objects.filter(sender=request.user).order_by("-id")[:5]
+        reciever_transaction = Transaction.objects.filter(reciever=request.user).order_by("-id")[:5]
 
         request_sender_transaction = Transaction.objects.filter(sender=request.user, transaction_type="request")[:5]
         request_reciever_transaction = Transaction.objects.filter(reciever=request.user, transaction_type="request")[:5]

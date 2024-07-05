@@ -69,12 +69,20 @@
                                                         {% endif %}
                                                     </td>
                                                     <td>
-                                                        {% if s.currency == 'USD' %}
-                                                        <p>-&#36;{{ s.amount|intcomma }}</p>
+                                                        {% if s.transaction_type == 'exchange' %}
+                                                            
+                                                                <p>-&#36;{{ s.amount|intcomma }}</p>
+                                        
+                                                           
                                                         {% else %}
-                                                        <p>-&#8358;{{ s.amount|intcomma }}</p>
+                                                            {% if s.currency == 'USD' %}
+                                                                <p>-&#36;{{ s.amount|intcomma }}</p>
+                                                            {% else %}
+                                                                <p>-&#8358;{{ s.amount|intcomma }}</p>
+                                                            {% endif %}
                                                         {% endif %}
                                                     </td>
+                                                    
                                                     <td>
                                                         <a href="{% url 'core:transaction_detail' s.transaction_id %}" class=""><i class="fas fa-eye"></i></a>
                                                     </td>
@@ -119,10 +127,17 @@
                                                         {% endif %}
                                                     </td>
                                                     <td>
-                                                        {% if s.currency == 'USD' %}
-                                                        <p>+&#36;{{ s.amount|intcomma }}</p>
+                                                        {% if s.transaction_type == 'exchange' %}
+                                                            
+                                                                <p>+&#8358;{{ s.amount_exchange|intcomma }}</p>
+                                        
+                                                           
                                                         {% else %}
-                                                        <p>+&#8358;{{ s.amount|intcomma }}</p>
+                                                            {% if s.currency == 'USD' %}
+                                                                <p>-&#36;{{ s.amount|intcomma }}</p>
+                                                            {% else %}
+                                                                <p>-&#8358;{{ s.amount|intcomma }}</p>
+                                                            {% endif %}
                                                         {% endif %}
                                                     </td>
                                                     <td>
@@ -247,7 +262,7 @@
                                                     </td>
                                                     <td>
                                                         {% if s.status == "request_processing" %}
-                                                        <a href="{% url 'core:delete-request' s.sender.account.account_number s.transaction_id %}" class="btn btn-danger"><i class="fas fa-x"></i>Delete</a>
+                                                        <a href="{% url 'core:delete-reciever' s.sender.account.account_number s.transaction_id %}" class="btn btn-danger"><i class="fas fa-x"></i>Delete</a>
                                                         {% elif s.status == "request_sent" %}
                                                         <a href="{% url 'core:settlement-confirmation' s.sender.account.account_number s.transaction_id %}" class="btn btn-primary"><i class="fas fa-check-circle"></i> Settle</a>
                                                         <a href="{% url 'core:delete-reciever' s.sender.account.account_number s.transaction_id %}" class="btn btn-danger"><i class="fas fa-x"></i> Cancel</a>

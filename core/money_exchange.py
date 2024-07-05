@@ -72,7 +72,7 @@ def DollarTransferProcess(request):
                 currency = "USD",     
                 sender_account=sender_account,
                 sender_dollar_account=sender_dollar_account, # Correct field for sender's DollarAccount
-                transaction_type="transfer"
+                transaction_type="exchange"
             )
             new_transaction.save()
 
@@ -119,6 +119,7 @@ def exchangeconfirmation(request, dollar_number, transaction_id):
             return render(request, "exchange/exchange-confirmation.html", context)
         
         reciever = account.user
+        
         
         print("Receiver:", reciever)  # Debug statement
 
@@ -183,7 +184,7 @@ def exchangerateprocess(request, dollar_number, account_number, transaction_id):
     transaction = Transaction.objects.get(transaction_id=transaction_id)
 
     sender = request.user
-    reciever= request.user
+    reciever= account
     
 
     sender_account = request.user.dollar_account 
@@ -198,10 +199,11 @@ def exchangerateprocess(request, dollar_number, account_number, transaction_id):
 
         if pin_number == pin_account.pin_number:
             transaction.status = "completed"
+            transaction.reciever_account = reciever_account
             transaction.save()
 
             #remove the amount that am sending from my account balance and update my amount
-            sender_account.dollar_balance -= transaction.amount
+            sender_account.dollar_balance -= transaction.amount + transaction.amount_fee
             sender_account.save()
 
              # Add the amount that was removed from my account to the person that i am sending the money to

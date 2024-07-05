@@ -6,8 +6,8 @@ from django.contrib import messages
 
 @login_required
 def transaction_list(request):
-    sender_transaction = Transaction.objects.filter(sender=request.user, transaction_type="transfer").order_by("-id")
-    reciever_transaction = Transaction.objects.filter(reciever=request.user, transaction_type="transfer").order_by("-id")
+    sender_transaction = Transaction.objects.filter(sender=request.user).order_by("-id")
+    reciever_transaction = Transaction.objects.filter(reciever=request.user).order_by("-id")
 
     request_sender_transaction = Transaction.objects.filter(sender=request.user, transaction_type="request")
     request_reciever_transaction = Transaction.objects.filter(reciever=request.user, transaction_type="request")

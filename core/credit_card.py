@@ -26,7 +26,6 @@ def process_payment(request):
                     # Simulate a successful payment for this example
                     # Deduct the amount from the user's account balance
                     account.account_balance -= Decimal(amount)
-                    admin_account.account_balance -= 5000
                     account.save()
                     
                     

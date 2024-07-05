@@ -19,9 +19,8 @@
                             <div class="icon-area">
                                 <img src="{% static 'assets1/images/icon/submitted-icon.png' %}" alt="icon">
                             </div>
-                            <h3>Submitted</h3>
+                            <h3>Success</h3>
                             <p>Payment <b>{{transaction.transaction_id}}</b>  was sent to <b> {{account.user.kyc.full_name}} </b></p>
-                            <h5><a href="">View Detail</a> | <a href="{% url 'core:search-account' %}"> <b>Send another payment</b></a></h5>
                         </div>
 
                     </div>

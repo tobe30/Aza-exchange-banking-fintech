@@ -21,16 +21,17 @@ def registerview(request):
             if form.is_valid():
                   #form.save()
                   new_user=form.save()
-                  html_template = 'email/register_email.html'
-                  html_message = render_to_string('email/register_email.html', {'form': form, 'request': request})
+                  #on comment if want to use email
+                  #html_template = 'email/register_email.html'
+                  #html_message = render_to_string('email/register_email.html', {'form': form, 'request': request})
                   #html_message = render_to_string(html_template)
-                  subject = 'welcome to Aza'
-                  email_form = settings.EMAIL_HOST_USER
-                  recipient_list = [new_user.email]
-                  message = EmailMessage(subject, html_message,
-                                   email_form, recipient_list)
-                  message.content_subtype = 'html'
-                  message.send()
+                  #subject = 'welcome to Aza'
+                  #email_form = settings.EMAIL_HOST_USER
+                  #recipient_list = [new_user.email]
+                  #message = EmailMessage(subject, html_message,
+                                  #email_form, recipient_list)
+                  #message.content_subtype = 'html'
+                  #message.send()
                   username = form.cleaned_data.get("username")
                   messages.success(request, f"Hey {username}, your account was created successfully")
                   new_user = authenticate(username=form.cleaned_data['email'], password=form.cleaned_data['password1'])
