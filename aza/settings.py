@@ -133,6 +133,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 WHITENOISE_SKIP_MISSING_FILES = True
+WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ["map"]
 
 
 MEDIA_URL ='/media/'
