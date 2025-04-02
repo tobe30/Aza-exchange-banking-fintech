@@ -66,6 +66,12 @@
                                                         <p class="text-danger">{{ s.status|title }}</p>
                                                         {% elif s.status == 'processing' %}
                                                         <p class="inprogress">{{ s.status|title }}</p>
+                                                        {% elif s.status == 'request_sent' %}
+                                                        <p class="text-success">{{ s.status|title }}</p>
+                                                        {% elif s.status == 'request_settled' %}
+                                                        <p class="text-success">{{ s.status|title }}</p>
+                                                        {% elif s.status == 'request_processing' %}
+                                                        <p class="inprogress">{{ s.status|title }}</p>
                                                         {% endif %}
                                                     </td>
                                                     <td>
@@ -123,6 +129,12 @@
                                                         {% elif s.status == 'failed' %}
                                                         <p class="text-danger">{{ s.status|title }}</p>
                                                         {% elif s.status == 'processing' %}
+                                                        <p class="inprogress">{{ s.status|title }}</p>
+                                                        {% elif s.status == 'request_sent' %}
+                                                        <p class="text-success">{{ s.status|title }}</p>
+                                                        {% elif s.status == 'request_settled' %}
+                                                        <p class="text-success">{{ s.status|title }}</p>
+                                                        {% elif s.status == 'request_processing' %}
                                                         <p class="inprogress">{{ s.status|title }}</p>
                                                         {% endif %}
                                                     </td>
