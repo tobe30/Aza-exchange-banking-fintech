@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-q(iczzr7g*t#5!l(p7_ce9l=e4(z528h&y0vem%3n31lr76810
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["azaex.onrender.com", '127.0.0.1', 'localhost']
 
 
 # Application definition
